@@ -121,7 +121,7 @@ button {
 }
 .btn__reset:hover{
   background-color:var(--color-win);
-  color:var(--color-neutral-light);
+  color:#fff;
   cursor:pointer;
   transition:var(--transition);
 }
