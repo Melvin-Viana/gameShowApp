@@ -95,6 +95,10 @@ button {
 .show {
   color: #000;
   background-color: #76CE82;
+  transform: scale(1.09);
+  margin:5px;
+    transition-property: margin,background-color;
+    transition-duration:.5s,.5s;
 }
 
 /* Keyboard */

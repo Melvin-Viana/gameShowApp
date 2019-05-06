@@ -72,10 +72,9 @@ const checkWin = () => {
 }
 
 const keyboardEvent = (key) => {
-    $('#qwerty').css('zIndex', 1);
     let letterFound = checkLetter(key);
     //Add .chosen to button
-    let letterBtn = $(`button:contains(${letterFound})`);
+    let letterBtn = $(`button:contains('${letterFound}')`);
     letterBtn.addClass('chosen');
     letterBtn.prop('disabled', true);
     //If checkLetter function returns a null value, the player has guesssed thwe wrong letter
@@ -88,9 +87,10 @@ const keyboardEvent = (key) => {
 // MAIN JS CODE
 // Check if DOM is ready.
 document.addEventListener("DOMContentLoaded", () => {
-
     //Attach a event listener to the “Start Game” button to hide the start screen overlay.
     $startBtn.on('click', () => {
+        $('#qwerty').css('zIndex', 1); //Add button to front
+
         const phraseArray = getRandomPhraseAsArray(phrasesArr);
         // Set the game display.
         addPhraseToDisplay(phraseArray);
@@ -101,10 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener('keypress', (event) => keyboardEvent(event.key));
 
         // TODO: OnClick for buttons Event
-        $('body').on('click', '#qwerty button', function () {
-            $(this).click(
+        $( "button" ).each(function(index) {
+            $(this).on("click", function(){
+               
                 keyboardEvent(this.textContent)
-            );
+             });
         });
     });
 });
