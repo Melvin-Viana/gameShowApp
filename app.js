@@ -57,10 +57,15 @@ const checkWin = () =>{
     const letters = document.querySelectorAll('.letter'); //Letters created only when game is started.
     const shownLetters = document.querySelectorAll('.show');
     if(letters===shownLetters){
-        $overlay.text("WIN");
+        $overlay.addClass("win");
+        $title.css('display','block');
+        $title.text('YOU WIN!')
     }
     if(missed===5){
-        $overlay.text("LOSE");
+        $overlay.addClass("lose");
+        $title.css('display','block');
+        $title.text('YOU LOSE!')
+
     }
 }
 
@@ -75,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Set the game display.
             addPhraseToDisplay(phraseArray);
             $startBtn.css('display','none');
-            $startClass.css('backgroundColor','initial')
+            $startClass.removeClass('start');
             $title.css('display','none');
 
             document.addEventListener('keypress', (event)=>{
