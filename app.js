@@ -45,7 +45,7 @@ const checkLetter = (key) => {
     // Loop through all .letter elements
     for (let i = 0; i < letters.length; i++) {
         //Check if they match the button
-        if (letters[i].textContent === key) {
+        if (letters[i].textContent.toUpperCase() === key.toUpperCase()) {
             letters[i].classList.add('show');
             letter = letters[i].textContent;
         }
