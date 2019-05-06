@@ -57,7 +57,7 @@ const checkLetter = (key) => {
 const checkWin = () => {
     const letters = document.querySelectorAll('.letter'); //Letters created only when game is started.
     const shownLetters = document.querySelectorAll('.show');
-    if (letters === shownLetters) {
+    if (letters.length === shownLetters.length) {
         $overlay.addClass("win");
         $title.css('display', 'block');
         $title.text('YOU WIN!')
@@ -67,9 +67,12 @@ const checkWin = () => {
         $title.css('display', 'block');
         $title.text('YOU LOSE!')
     }
+    $('#qwerty').css('zIndex', "");
+
 }
 
 const keyboardEvent = (key) => {
+    $('#qwerty').css('zIndex', 1);
     let letterFound = checkLetter(key);
     //Add .chosen to button
     let letterBtn = $(`button:contains(${letterFound})`);
@@ -98,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener('keypress', (event) => keyboardEvent(event.key));
 
         // TODO: OnClick for buttons Event
-        $('#qwerty').css('zIndex', 1);
         $('body').on('click', '#qwerty button', function () {
             $(this).click(
                 keyboardEvent(this.textContent)
