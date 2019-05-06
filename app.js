@@ -35,6 +35,8 @@ const addPhraseToDisplay = arr => {
         //If li is not a space
         if (arr[i] !== " ")
             newChar.classList.add('letter')
+        else
+            newChar.classList.add('space')
         //add .letter as class
     }
 }
@@ -100,10 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.addEventListener('keypress', (event) => keyboardEvent(event.key));
 
-        // TODO: OnClick for buttons Event
-        $( "button" ).each(function(index) {
+        $( "button" ).each(function() {
             $(this).on("click", function(){
-               
                 keyboardEvent(this.textContent)
              });
         });
