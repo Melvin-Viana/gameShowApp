@@ -8,6 +8,7 @@ const $phraseUl = $phrase.first();
 const $startClass = $('.start');
 const $title = $('.title')
 const $overlay = $('#overlay');
+const $buttons = $('button');
 
 // Utility Variables
 let missed = 0; //Add + 1 when player's guess missed
@@ -99,5 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
             checkWin();
             });
 
+            // TODO: OnClick for buttons Event
+            $('#qwerty').css('zIndex',1);
+            document.addEventListener('click', function (event) {
+                console.log(event.target);
+            }, false);
     });
 });
