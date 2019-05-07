@@ -9,7 +9,7 @@ const $buttons = $('button');
 
 // Utility Variables
 let missed = 0; //Add + 1 when player's guess missed
-const phrasesArr = ['JavaScript is the best',
+const phrasesArr = ['JavaScript Developer',
     'Game Show App',
     'Self Taught Developer',
     'Team Treehouse',
@@ -56,6 +56,7 @@ const checkLetter = (key) => {
 };
 
 const reset = (result) => {
+    missed = 0;
     const $disabledButtons = $('button:disabled');
     overlay.classList.add(result);
     $title.show();
@@ -69,10 +70,10 @@ const reset = (result) => {
         $(this).prop('disabled', false).removeClass('chosen')
     })
     // Reset missed
-    missed = 0;
-    for(let i=0;i<5;i++){
+    for (let i = 0; i < 5; i++) {
         $('#scoreboard ol').append('<li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li>')
     }
+    // Remove event listener
 
     $('#qwerty').css('z-index', -1);
 }
@@ -81,16 +82,17 @@ const checkWin = () => {
     const letters = document.querySelectorAll('.letter'); //Letters created only when game is started.
     const shownLetters = document.querySelectorAll('.show');
 
-    if (letters.length === shownLetters.length) {
-        $('#scoreboard ol').empty();
-        reset('win');
-    }
     if (missed === 5) {
+        document.removeEventListener('keypress', keypressEvent);
         reset('lose');
+    } else if (missed !== 5 && letters.length === shownLetters.length) {
+        document.removeEventListener('keypress',keypressEvent);
+        $('#scoreboard ol').empty();
+        return reset('win');
     }
 }
 
-const keyboardEvent = (key) => {
+const buttonClickEvent = (key) => {
     let letterFound = checkLetter(key);
     //Add .chosen to button
     let letterBtn = $(`button:contains('${key}')`);
@@ -102,6 +104,9 @@ const keyboardEvent = (key) => {
         $('#scoreboard ol li').last().remove();
     }
     checkWin();
+}
+const keypressEvent = (event) => {
+    $(`button:contains('${event.key}'):enabled`).trigger('click');
 }
 
 const resetButton = (result) => {
@@ -123,16 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
         $startBtn.css('display', 'none');
         overlay.classList = "";
         $title.css('display', 'none');
-   // Trigger keyboard click onClick
-   document.addEventListener('keypress', (event) => {
-    $(`button:contains('${event.key}'):enabled`).trigger('click');
-});
+        // Trigger keyboard click onClick
+        document.addEventListener('keypress',keypressEvent );
 
     });
 
     $("button").each(function () {
         $(this).on("click", function () {
-            keyboardEvent(this.textContent)
+            buttonClickEvent(this.textContent)
         });
     });
 });
