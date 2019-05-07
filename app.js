@@ -76,11 +76,11 @@ const checkWin = () => {
 const keyboardEvent = (key) => {
     let letterFound = checkLetter(key);
     //Add .chosen to button
-    let letterBtn = $(`button:contains('${letterFound}')`);
+    let letterBtn = $(`button:contains('${key}')`);
     letterBtn.addClass('chosen');
     letterBtn.prop('disabled', true);
     //If checkLetter function returns a null value, the player has guesssed thwe wrong letter
-    if (!letterFound) {
+    if (letterFound==null) {
         missed++;
         $('#scoreboard ol li').last().remove();
     }
@@ -100,7 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
         $startClass.removeClass('start');
         $title.css('display', 'none');
 
-        document.addEventListener('keypress', (event) => keyboardEvent(event.key));
+        // Trigger keyboard click onClick
+        document.addEventListener('keypress', (event) => {$(`button:contains('${event.key}'):enabled`).trigger('click');});
 
         $( "button" ).each(function() {
             $(this).on("click", function(){
