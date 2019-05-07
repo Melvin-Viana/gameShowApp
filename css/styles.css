@@ -76,7 +76,9 @@ button {
 }
 
 /* Phrase */
-
+#phrase{
+  z-index: -1;
+}
 .letter {
   font-size: var(--font-size-medium);
   height: 65px;
@@ -99,7 +101,6 @@ button {
   margin:0 5px;
     transition-property: transform,background-color;
     transition-duration:.5s,.5s;
-    
 }
 
 /* Keyboard */

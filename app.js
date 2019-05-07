@@ -69,7 +69,7 @@ const checkWin = () => {
         $title.css('display', 'block');
         $title.text('YOU LOSE!')
     }
-    $('#qwerty').css('zIndex', "");
+    $('#qwerty').css('z-index', "");
 
 }
 
@@ -80,7 +80,7 @@ const keyboardEvent = (key) => {
     letterBtn.addClass('chosen');
     letterBtn.prop('disabled', true);
     //If checkLetter function returns a null value, the player has guesssed thwe wrong letter
-    if (letterFound==null) {
+    if (letterFound == null) {
         missed++;
         $('#scoreboard ol li').last().remove();
     }
@@ -101,12 +101,14 @@ document.addEventListener("DOMContentLoaded", () => {
         $title.css('display', 'none');
 
         // Trigger keyboard click onClick
-        document.addEventListener('keypress', (event) => {$(`button:contains('${event.key}'):enabled`).trigger('click');});
+        document.addEventListener('keypress', (event) => {
+            $(`button:contains('${event.key}'):enabled`).trigger('click');
+        });
 
-        $( "button" ).each(function() {
-            $(this).on("click", function(){
+        $("button").each(function () {
+            $(this).on("click", function () {
                 keyboardEvent(this.textContent)
-             });
+            });
         });
     });
 });
