@@ -3,7 +3,7 @@
 Using jQuery and JavaScript to create a fun word-based guessing game. This game works only if JavaScript is enabled. 
 The programming only tests words or phrases with letters only.
 
-[Game Show App](https://melvin-viana.github.io/interactivePhotoGallery/)
+[Game Show App](https://melvin-viana.github.io/gameShowApp/)
 
 ## Lessons Learned
 1. JavaScript
