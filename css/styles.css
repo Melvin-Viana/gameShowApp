@@ -174,3 +174,7 @@ button {
 .lose a {
   color: var(--color-lose);
 }
+.lose a:hover{
+  background-color: var(--color-lose);
+  color:#fff;
+}

@@ -3,9 +3,8 @@ const $qwerty = $('#qwerty');
 const $phrase = $('#phrase');
 const $startBtn = $('.btn__reset');
 const $phraseUl = $phrase.first();
-const $startClass = $('.start');
 const $title = $('.title')
-const $overlay = $('#overlay');
+const overlay = document.querySelector('#overlay');
 const $buttons = $('button');
 
 // Utility Variables
@@ -17,6 +16,7 @@ const phrasesArr = ['JavaScript is the best',
     'Free Code Camp'
 ]; //Phrases player will guess
 
+//=======================
 // FUNCTIONS
 const getRandomPhraseAsArray = (arr) => {
     //Random numbers 0-4
@@ -40,7 +40,7 @@ const addPhraseToDisplay = arr => {
         //add .letter as class
     }
 }
-// TODO: CheckLetter function - One paramater button player has guessed
+
 const checkLetter = (key) => {
     const letters = document.querySelectorAll('.letter'); //Letters created only when game is started.
     let letter = null;
@@ -55,22 +55,39 @@ const checkLetter = (key) => {
     return letter;
 };
 
-// TODO: checkWin function
+const reset = (result) => {
+    const $disabledButtons = $('button:disabled');
+    overlay.classList.add(result);
+    $title.show();
+    $title.text(`YOU ${result.toUpperCase()}`);
+    $startBtn.show();
+    $startBtn.text('Reset');
+    //Reset the list
+    $phrase.empty();
+    //Reset disabled
+    $disabledButtons.each(function () {
+        $(this).prop('disabled', false).removeClass('chosen')
+    })
+    // Reset missed
+    missed = 0;
+    for(let i=0;i<5;i++){
+        $('#scoreboard ol').append('<li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li>')
+    }
+
+    $('#qwerty').css('z-index', -1);
+}
+
 const checkWin = () => {
     const letters = document.querySelectorAll('.letter'); //Letters created only when game is started.
     const shownLetters = document.querySelectorAll('.show');
+
     if (letters.length === shownLetters.length) {
-        $overlay.addClass("win");
-        $title.css('display', 'block');
-        $title.text('YOU WIN!')
+        $('#scoreboard ol').empty();
+        reset('win');
     }
     if (missed === 5) {
-        $overlay.addClass("lose");
-        $title.css('display', 'block');
-        $title.text('YOU LOSE!')
+        reset('lose');
     }
-    $('#qwerty').css('z-index', "");
-
 }
 
 const keyboardEvent = (key) => {
@@ -86,29 +103,36 @@ const keyboardEvent = (key) => {
     }
     checkWin();
 }
+
+const resetButton = (result) => {
+    $startBtn.show();
+    $startBtn.text('Reset');
+    $overlay.removeClass(result);
+}
+//=======================
 // MAIN JS CODE
 // Check if DOM is ready.
 document.addEventListener("DOMContentLoaded", () => {
     //Attach a event listener to the “Start Game” button to hide the start screen overlay.
     $startBtn.on('click', () => {
-        $('#qwerty').css('zIndex', 1); //Add button to front
+        $('#qwerty').css('z-index', 1); //Add button to front
 
         const phraseArray = getRandomPhraseAsArray(phrasesArr);
         // Set the game display.
         addPhraseToDisplay(phraseArray);
         $startBtn.css('display', 'none');
-        $startClass.removeClass('start');
+        overlay.classList = "";
         $title.css('display', 'none');
+   // Trigger keyboard click onClick
+   document.addEventListener('keypress', (event) => {
+    $(`button:contains('${event.key}'):enabled`).trigger('click');
+});
 
-        // Trigger keyboard click onClick
-        document.addEventListener('keypress', (event) => {
-            $(`button:contains('${event.key}'):enabled`).trigger('click');
-        });
+    });
 
-        $("button").each(function () {
-            $(this).on("click", function () {
-                keyboardEvent(this.textContent)
-            });
+    $("button").each(function () {
+        $(this).on("click", function () {
+            keyboardEvent(this.textContent)
         });
     });
 });
